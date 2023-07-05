@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+body {
+	text-align: center;
+}
+
+#message {
+	min-height: 600px;
+	height: 100%;
+	width: 500px;
+	background: beige;
+	margin: auto;
+}
+
+#text {
+	height: 107px;
+	width: 443px;
+}
+
+#lala {
+	float: left;
+}
+</style>
+<body>
+	<h1>Welcome</h1>
+	<label id="onlineUserCount"></label>
+	<div></div>
+	<div id="message"></div>
+	<br />
+	<textarea id="text"></textarea>
+	<button onclick="send()">发送</button>
+</body>
+<script>
+function getQueryString(name){
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+	var websocket = null;
+	//判断当前浏览器是否支持WebSocket
+	if ('WebSocket' in window) {
+		var info = getQueryString("name");
+		var arr = info.split("_");
+		var teamId = arr[0];
+		var userId = arr[1];
+		websocket = new WebSocket("ws://localhost:8080/jeecg-boot/websocketTeam/"+teamId+"/"+userId);//注意前缀,ip,端口号 
+	} else {
+		alert('Not support websocket')
+	}
+
+	//连接发生错误的回调方法
+	websocket.onerror = function() {
+		setMessageInnerHTML("error");
+		console.log("连接发生错误......");
+	};
+
+	//连接成功建立的回调方法
+	websocket.onopen = function(event) {
+		setMessageInnerHTML("open");
+		console.log("连接成功......");
+	}
+
+	//接收到消息的回调方法
+	websocket.onmessage = function(event) {
+		debugger;
+		//{\"messageType\":\"2\",\"toUserIds\":\"2\",\"content\":\"\"}","messageType":"1"}
+		var data = JSON.parse(event.data);
+		if(data.messageType == 2){
+			document.getElementById('onlineUserCount').innerHTML = "在线人数："+data.onlineUsers.length;
+		} else{
+			var name = data.pushUser.nickname;
+			//当是自己发送消息时，称呼改成我
+			if(getQueryString("name") == data.pushUser.id){
+				name = "我";
+			}
+			setMessageInnerHTML(name+":"+data.content);			
+		}
+		console.log("接受到服务端的消息:" + event.data);
+	}
+
+	//连接关闭的回调方法
+	websocket.onclose = function() {
+		//setMessageInnerHTML("close");
+		console.log("关闭连接......");
+	}
+
+	//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+	window.onbeforeunload = function() {
+		websocket.close();
+	}
+
+	//将消息显示在网页上
+	function setMessageInnerHTML(innerHTML) {
+		document.getElementById('message').innerHTML += '<div id = "lala">'
+				+ innerHTML + '</div><br/>';
+	}
+
+	//关闭连接
+	/* function closeWebSocket() {
+		websocket.close();
+	} */
+
+	//发送消息
+	function send() {
+		var message = document.getElementById('text').value;
+		var data = {"messageType":1,"toUserIds":getQueryString("to"),"content":message};
+		websocket.send(JSON.stringify(data));
+		//发送完清空
+		document.getElementById('text').value = "";
+	}
+	
+	
+	
+	
+</script>
+
+</html>

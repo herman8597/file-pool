@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  production: false
+  basic:
+    enable: false
+    username: jeecg
+    password: jeecg1314
+logging:
+  level:
+    root: info
+    network:
+      vena:
+        cooperation :debug
+      aliyun:
+        oss: trace
+    org:
+      jeecg: debug
+#        config: error
+
+
+deposit:
+  wallet:
+    #host: http://192.168.1.187:8810
+    host: http://10.0.0.115:8888
+    user_name: gz
+    secret_key: gz-pwd

@@ -1,0 +1,77 @@
+spring-boot-plus:
+  # 是否启用ansi控制台输出有颜色的字体，dev环境建议开启，服务器环境设置为false
+  enable-ansi: true
+  # 当前环境服务IP地址
+  server-ip: 119.37.199.183
+  # 文件上传下载配置
+  upload-path: /opt/upload/
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://10.37.199.190:3306/file_pool_017?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: "c/?*Uw7pfj5J"
+
+  # Redis配置
+  redis:
+    database: 0
+    host: 10.37.199.185
+    password: "jiangkoan@HJ123"
+    port: 6379
+
+#云钱包接口地址
+cloud:
+#  url: 'http://192.168.0.131:8888/api/wallet/'
+  url: 'http://10.37.199.188:8888/api/wallet/'
+
+# 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#美联短信配置
+meilian:
+  apikey: '5eabf9440ad0b82d848f7ad0b802b8f5'
+  username: '18697400491'
+  pwd_md5: '322e2cf43d675194698af4a61463f38b'
+  sign: '【沃云星球】'
+
+#邮件短信配置
+email:
+  userName: jwoccz@163.com
+  password: LWNJGXKTVZOXYYHG
+  subject: 【沃云星球】服务通知
+  fromname: 沃云星球
+  hostName: smtp.163.com
+
+#文件上传配置
+upload:
+  #启用 1为阿里oss 2为华为obs
+  active: 1
+  aliyun:
+    oss:
+      endpoint: 'https://oss-cn-hangzhou.aliyuncs.com'
+      accessKeyId: 'LTAI5t7HNZPC5f3DZVgo43wD'
+      accessKeySecret: 'qkyY3rgURt0Qt5LAJhy0BjQeOmtRku'
+      endpoint_get: 'https://hzjinwo.oss-cn-hangzhou.aliyuncs.com'
+      bucketName: 'hzjinwo'
+  huaweicloud:
+    obs:
+      endPoint: https://obs.cn-south-1.myhuaweicloud.com
+      ak: F2QV7ARSFMHPLASWTZSK
+      sk: KKnfc1fTM375LZln2xIpgOfkV5U1uaje5xbNKH0S
+      bucketname: crypto
+#xxl-job 配置
+xxl:
+  job:
+    admin:
+      addresses: http://10.37.199.188:7090/xxl-job-admin
+    accessToken:
+    executor:
+      appname: "fil-pool-17"
+      address:
+      ip: 192.168.0.131
+      port: 10090
+      logpath: logs/xxl-job/jobhandler
+      logretentiondays: 3

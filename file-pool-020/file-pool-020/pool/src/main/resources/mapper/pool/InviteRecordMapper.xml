@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.filpool.pool.mapper.InviteRecordMapper">
+
+    <select id="queryInviteRecord" parameterType="io.filpool.pool.request.InviteRecordRequest" resultType="io.filpool.pool.entity.InviteRecord">
+        SELECT a.*,fu.mobile,fu.email FROM(SELECT *,2 as relation FROM fil_invite_record WHERE invite_user_id in(SELECT user_id FROM fil_invite_record WHERE invite_user_id = #{InviteRecordRequest.id})
+        UNION
+        SELECT *,1 as relation FROM fil_invite_record WHERE invite_user_id =#{InviteRecordRequest.id})
+        AS a
+        LEFT JOIN fil_user AS fu ON fu.id=a.user_id
+        WHERE 1=1
+        <if test="InviteRecordRequest.account!=null and InviteRecordRequest.account!=''">
+            and  fu.mobile=#{InviteRecordRequest.account}
+        </if>
+        <if test="InviteRecordRequest.relation!=null and InviteRecordRequest.relation!=''">
+            and a.relation=#{InviteRecordRequest.relation}
+        </if>
+        <if test="InviteRecordRequest.startDate!=null and InviteRecordRequest.startDate!=''">
+            and a.create_time <![CDATA[ >= ]]> #{InviteRecordRequest.startDate}
+        </if>
+        <if test="InviteRecordRequest.endDate!=null and InviteRecordRequest.endDate!=''">
+            and a.create_time <![CDATA[ <= ]]> #{InviteRecordRequest.endDate}
+        </if>
+        LIMIT #{InviteRecordRequest.pageIndex},#{InviteRecordRequest.pageSize}
+    </select>
+
+
+
+    <select id="queryRewardDescFour" parameterType="io.filpool.pool.param.InviteRecordPageParam" resultType="io.filpool.pool.vo.RewardDescVo">
+        SELECT * FROM
+        (
+        SELECT a.type,a.power_symbol AS powerSymbol,s.id AS order_number,s.type AS good_type,s.amount_price AS discountPrice,s.tb_sum AS quantity,a.usdt_amount,a.power_amount,a.create_time
+        FROM fil_reward_record as a LEFT JOIN fil_supplement AS s ON a.order_id=s.id
+        WHERE  s.u_id=#{InviteRecordPageParam.id} AND a.user_id=#{InviteRecordPageParam.returnedPeopleId}
+        UNION
+        SELECT a.type,a.power_symbol AS powerSymbol,b.order_number,b.good_type,b.total_amount as discountPrice,b.quantity,a.usdt_amount,a.power_amount,a.create_time
+        FROM fil_reward_record as a LEFT JOIN fil_order as b ON a.order_id=b.id
+        WHERE  b.user_id=#{InviteRecordPageParam.id} AND a.user_id=#{InviteRecordPageParam.returnedPeopleId}
+        )
+        t WHERE 1=1
+        <if test="InviteRecordPageParam.orderNumber!=null and InviteRecordPageParam.orderNumber!=''">
+            and t.order_number=#{InviteRecordPageParam.orderNumber}
+        </if>
+        <if test="InviteRecordPageParam.goodType!=null and InviteRecordPageParam.goodType!=''">
+            and t.good_type=#{InviteRecordPageParam.goodType}
+        </if>
+        <if test="InviteRecordPageParam.startDate!=null and InviteRecordPageParam.startDate!=''">
+            and t.create_time <![CDATA[ >= ]]> #{InviteRecordPageParam.startDate}
+        </if>
+        <if test="InviteRecordPageParam.endDate!=null and InviteRecordPageParam.endDate!=''">
+            and t.create_time <![CDATA[ <= ]]> #{InviteRecordPageParam.endDate}
+        </if>
+        <if test="InviteRecordPageParam.type!=null and InviteRecordPageParam.type!=''">
+            and t.type=#{InviteRecordPageParam.type}
+        </if>
+        order by create_time desc
+        LIMIT ${(InviteRecordPageParam.pageIndex-1)*InviteRecordPageParam.pageSize},${InviteRecordPageParam.pageSize}
+    </select>
+
+
+    <select id="queryRewardDescFourTotal" parameterType="io.filpool.pool.param.InviteRecordPageParam" resultType="io.filpool.pool.vo.RewardDescVo">
+        SELECT * FROM
+        (
+        SELECT a.type,s.id AS order_number,s.type AS good_type,s.amount_price AS discountPrice,s.tb_sum AS quantity,a.usdt_amount,a.power_amount,a.create_time
+        FROM fil_reward_record as a LEFT JOIN fil_supplement AS s ON a.order_id=s.id
+        WHERE  s.u_id=#{InviteRecordPageParam.id} AND a.user_id=#{InviteRecordPageParam.returnedPeopleId}
+        UNION
+        SELECT a.type,b.order_number,b.good_type,b.total_amount as discountPrice,b.quantity,a.usdt_amount,a.power_amount,a.create_time
+        FROM fil_reward_record as a LEFT JOIN fil_order as b ON a.order_id=b.id
+        WHERE  b.user_id=#{InviteRecordPageParam.id} AND a.user_id=#{InviteRecordPageParam.returnedPeopleId}
+        )
+        t WHERE 1=1
+        <if test="InviteRecordPageParam.orderNumber!=null and InviteRecordPageParam.orderNumber!=''">
+            and t.order_number=#{InviteRecordPageParam.orderNumber}
+        </if>
+        <if test="InviteRecordPageParam.goodType!=null and InviteRecordPageParam.goodType!=''">
+            and t.good_type=#{InviteRecordPageParam.goodType}
+        </if>
+        <if test="InviteRecordPageParam.startDate!=null and InviteRecordPageParam.startDate!=''">
+            and t.create_time <![CDATA[ >= ]]> #{InviteRecordPageParam.startDate}
+        </if>
+        <if test="InviteRecordPageParam.endDate!=null and InviteRecordPageParam.endDate!=''">
+            and t.create_time <![CDATA[ <= ]]> #{InviteRecordPageParam.endDate}
+        </if>
+        <if test="InviteRecordPageParam.type!=null and InviteRecordPageParam.type!=''">
+            and t.type=#{InviteRecordPageParam.type}
+        </if>
+    </select>
+
+</mapper>

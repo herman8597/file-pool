@@ -1,0 +1,108 @@
+{
+  "width": 640,
+  "height": 1200,
+  "debug": false,
+  "preload": true,
+  "localPath": "D:\\SoftData\\test1",
+  "backgroundColor": "#d04c44",
+  "blocks": [
+    {
+      "x": 128,
+      "y": 540,
+      "width": 384,
+      "height": 540,
+      "backgroundColor": "#fff",
+      "borderRadius": 13,
+      "zIndex": 2
+    }
+  ],
+  "texts": [
+    {
+      "text": "{用户名}",
+      "x": 320,
+      "y": 693,
+      "fontSize": 22,
+      "lineHeight": 22,
+      "color": "#777",
+      "width": 320,
+      "lineNum": 1,
+      "baseLine": "middle",
+      "textAlign": "center",
+      "zIndex": 3
+    },
+    {
+      "text": "微信内长按识别小程序码",
+      "x": 320,
+      "y": 1030,
+      "fontSize": 18,
+      "lineHeight": 22,
+      "color": "#777",
+      "width": 320,
+      "lineNum": 1,
+      "baseLine": "middle",
+      "textAlign": "center",
+      "zIndex": 3
+    },
+    {
+      "text": "我的相册二维码",
+      "x": 320,
+      "y": 324,
+      "fontSize": 32,
+      "lineHeight": 32,
+      "color": "#fff",
+      "width": 320,
+      "lineNum": 1,
+      "baseLine": "middle",
+      "textAlign": "center",
+      "zIndex": 3
+    },
+    {
+      "text": "扫码免费一键转图",
+      "x": 320,
+      "y": 382,
+      "fontSize": 26,
+      "lineHeight": 26,
+      "color": "#ddd",
+      "width": 320,
+      "lineNum": 1,
+      "baseLine": "middle",
+      "textAlign": "center",
+      "zIndex": 3
+    }
+  ],
+  "images": [
+    {
+      "url": "http://b-ssl.duitang.com/uploads/item/201208/30/20120830173930_PBfJE.jpeg",
+      "x": 0,
+      "y": 0,
+      "width": 640,
+      "height": 1200,
+      "zIndex": 0
+    },
+    {
+      "url": "http://pic1.nipic.com/2008-12-29/20081229204837907_2.jpg",
+      "x": 175,
+      "y": 100,
+      "width": 272,
+      "height": 82,
+      "zIndex": 10
+    },
+    {
+      "url": "http://thirdwx.qlogo.cn/mmopen/vi_32/1dLYhVUcx4JkTQa87kGKNJcrcHNJX3lRmRKzowX7viaw360RCoCNRodLrBlz4MqP2xiayNboVB8HRUW0hjQxicycA/132",
+      "x": 275,
+      "y": 566,
+      "width": 90,
+      "height": 90,
+      "zIndex": 10
+    },
+    {
+      "url": "http://images.liqucn.com/img/h98/h40/img_localize_ba4649e51a7aab8eb335072045388956_900x500.jpg",
+      "x": 195,
+      "y": 737,
+      "width": 249,
+      "height": 249,
+      "zIndex": 10
+    }
+  ],
+  "lines": []
+}

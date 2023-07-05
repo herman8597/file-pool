@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: hulihui
+swagger:
+  production: false
+  basic:
+    enable: false
+    username: jeecg
+    password: jeecg1314
+
+
+sms:
+  phone:
+    internationalAppId: EUCP-EMY-IMS1-XL9FQ
+    internationalSecretKey: 39C97A1844FD8FCF
+    internationalSign: "[QiDax客服] "
+    appId: EUCP-EMY-SMS1-1B5R3
+    secretKey: 5BA7A77BCA7CDD47
+    sign: "[QiDax客服] "
